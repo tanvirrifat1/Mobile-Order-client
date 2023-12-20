@@ -1,4 +1,4 @@
-import image from "../../assets/phone.jpg";
+import image from "../../assets/hello.png";
 import image2 from "../../assets/phone5.png";
 import image3 from "../../assets/phone3.jpg";
 
