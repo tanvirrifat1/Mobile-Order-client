@@ -59,12 +59,14 @@ const Navbar = () => {
                 className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none border border-black text-black"
               />
             </div>
-            <button
-              type="button"
-              className="hidden px-6 py-2 font-semibold rounded lg:block border border-black"
-            >
-              Log in
-            </button>
+            <Link to={"/login"}>
+              <button
+                type="button"
+                className="hidden px-6 py-2 font-semibold rounded lg:block border border-black"
+              >
+                Log in
+              </button>
+            </Link>
           </div>
           <button title="Open menu" type="button" className="p-4 lg:hidden">
             <svg
