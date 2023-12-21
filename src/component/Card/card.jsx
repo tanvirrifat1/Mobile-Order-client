@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiSolidCartAdd } from "react-icons/bi";
 import { FaStar } from "react-icons/fa";
+import { AuthContext } from "../Shared/Provider/AuthProvider";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Card = () => {
+  const { user } = useContext(AuthContext);
+  const router = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  console.log(searchQuery);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,11 +28,53 @@ const Card = () => {
     fetchData();
   }, [searchQuery]);
 
-  const handleSubmit = async () => {
-    console.log(data);
+  const handleAddToCart = (service) => {
+    if (user && user?.email) {
+      const saveData = {
+        type: service.type,
+        details: service.details,
+        email: user?.email,
+        image: service.image,
+        name: service.name,
+        price: service.price,
+        processor: service.processor,
+        memory: service.memory,
+        productId: service?._id,
+      };
+
+      fetch(`http://localhost:5000/api/v1/cart/create-cart`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(saveData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data?.statusCode);
+          if (data?.statusCode === 200) {
+            Swal.fire("Add to cart successfully");
+            router("/shop");
+          } else {
+            Swal.fire("Already Booked!");
+          }
+        });
+    } else {
+      Swal.fire({
+        title: "Please Login First?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router("/login", { state: { from: location } });
+        }
+      });
+    }
   };
 
-  console.log(data);
   return (
     <div className="p-2">
       <section className="py-20 container mx-auto">
@@ -106,7 +153,7 @@ const Card = () => {
 
                 <div className="flex justify-center absolute bottom-0 left-0 w-full h-0 flex-col  items-center opacity-0 group-hover:h-full group-hover:opacity-90 duration-1000">
                   <div
-                    onClick={handleSubmit}
+                    onClick={() => handleAddToCart(service)}
                     className="flex gap-2 justify-center items-center"
                   >
                     <button className="w-52 h-10 font-semibold bg-slate-600 text-white hover:bg-white hover:text-black hover:shadow-lg">

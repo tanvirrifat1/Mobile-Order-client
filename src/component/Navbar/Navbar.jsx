@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Shared/Provider/AuthProvider";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  console.log(user);
 
   const handleLogOut = () => {
     logOut()
@@ -34,9 +34,17 @@ const Navbar = () => {
                   Card
                 </Link>
               </li>
+              <li className="flex">
+                <Link
+                  to={"/shop"}
+                  className="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent"
+                >
+                  <FaShoppingCart className="text-xl" />
+                </Link>
+              </li>
             </ul>
           </nav>
-          {user.photoURL && (
+          {user?.photoURL && (
             <div>
               <div className="flex flex-col mt-2 items-center justify-center">
                 <div className="flex justify-center gap-2">

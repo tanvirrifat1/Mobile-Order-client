@@ -6,6 +6,7 @@ import Layout from "../Layout/Main";
 import Card from "../Card/card";
 import Login from "../Login/Login";
 import SignUp from "../Signup/SignUp";
+import Shop from "../shop/Shop";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/shop",
+        element: <Shop />,
       },
     ],
   },
