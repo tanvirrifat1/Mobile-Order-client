@@ -1,19 +1,54 @@
+import { useContext } from "react";
+import { BiArrowBack } from "react-icons/bi";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { AuthContext } from "../Shared/Provider/AuthProvider";
 
 const SignUp = () => {
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
+  //  const location = useLocation();
+
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
-    const email = form.name.value;
-    const password = form.email.value;
-    const name = form.password.value;
+    const name = form.name.value;
 
-    console.log(email, password, name);
+    const email = form.email.value; // corrected: use form.email.value for email
+    const password = form.password.value;
+
+    createUser(email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        handleUpdateUserProfile(name);
+        console.log(user);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle error
+      });
+  };
+
+  const handleUpdateUserProfile = (name) => {
+    const profile = {
+      displayName: name,
+    };
+
+    updateUserProfile(profile)
+      .then(() => {})
+      .catch((error) => console.error(error));
   };
 
   return (
     <div>
+      <div>
+        <Link to={"/login"}>
+          <BiArrowBack className="text-3xl ml-6 mt-9" />
+        </Link>
+      </div>
       <div className="flex justify-center items-center mt-36">
         <div className="w-full max-w-md p-8 space-y-3 rounded-xl  bg-white shadow-xl">
           <h1 className="text-2xl font-bold text-center">SignUp</h1>

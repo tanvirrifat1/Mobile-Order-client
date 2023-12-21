@@ -29,7 +29,7 @@ const Card = () => {
 
   console.log(data);
   return (
-    <div>
+    <div className="p-2">
       <section className="py-20 container mx-auto">
         <div className="flex flex-wrap">
           <div className="w-full px-4">
@@ -72,7 +72,7 @@ const Card = () => {
           />
         </div>
         {/*  */}
-        <div className="w-full container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="w-full container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-4">
           {data?.data?.map((service) => (
             <div
               key={service?.id}
