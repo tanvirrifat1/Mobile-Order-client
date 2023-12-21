@@ -1,32 +1,33 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../Shared/Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const Shop = () => {
-  const [data, setData] = useState([]);
+  const { user } = useContext(AuthContext);
+
+  const {
+    data = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["cart", user?.email],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5000/api/v1/cart/total?email=${user?.email}`
+      );
+      return res.json();
+    },
+  });
 
   const total = data?.data?.reduce(
-    (sum, item) => sum + parseFloat(item.price),
+    (sum, item) => sum + parseInt(item.price),
     0
   );
 
-  const { user } = useContext(AuthContext);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/api/v1/cart/total?email=${user?.email}`
-        );
-        const jsonData = await response.json();
-        setData(jsonData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [user?.email]);
+  if (isLoading) {
+    return <p className="text-center text-2xl mt-10">Loading....</p>;
+  }
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -46,9 +47,10 @@ const Shop = () => {
           .then((data) => {
             if (data.data) {
               console.log(data);
+              refetch();
             }
           });
-        <div onClick={() => window.location.assign("/")}>ok</div>;
+
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",

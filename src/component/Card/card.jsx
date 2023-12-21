@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Card = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const router = useNavigate();
   const location = useLocation();
   const [data, setData] = useState([]);
@@ -75,6 +75,10 @@ const Card = () => {
     }
   };
 
+  if (loading) {
+    <p className="text-center text-2xl mt-10">Loading....</p>;
+  }
+
   return (
     <div className="p-2">
       <section className="py-20 container mx-auto">
@@ -123,7 +127,7 @@ const Card = () => {
           {data?.data?.map((service) => (
             <div
               key={service?.id}
-              className=" rounded-md shadow-md group relative"
+              className=" rounded-md shadow-md group relative p-2"
             >
               <img
                 src={service?.image}
@@ -138,7 +142,13 @@ const Card = () => {
                   <p className="text-black font-semibold">
                     {service?.details.slice(0, 90)}
                   </p>
-
+                  <p className="text-black font-semibold">
+                    Memory: {service?.memory}
+                  </p>
+                  <p className="text-black font-semibold">
+                    Type: {service?.type}
+                  </p>
+                  <p className="text-black font-semibold">OS: {service?.os}</p>
                   <p className="text-black font-semibold flex my-2">
                     {Array(service?.rating)
                       .fill(0)
