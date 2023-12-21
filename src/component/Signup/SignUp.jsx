@@ -1,9 +1,11 @@
 import { useContext } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { FaGoogle } from "react-icons/fa";
+
 import { Link, useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../Shared/Provider/AuthProvider";
+import Swal from "sweetalert2";
+import Google from "../Shared/GoogleSignUp/Google";
 
 const SignUp = () => {
   const { createUser, updateUserProfile } = useContext(AuthContext);
@@ -24,6 +26,7 @@ const SignUp = () => {
         const user = userCredential.user;
         handleUpdateUserProfile(name);
         console.log(user);
+        Swal.fire("user created successfully");
         navigate("/");
       })
       .catch((error) => {
@@ -95,11 +98,8 @@ const SignUp = () => {
             </p>
             <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
           </div>
-          <div className="flex justify-center">
-            <button aria-label="Log in with Google" className="p-3 rounded-sm">
-              <FaGoogle className="text-4xl" />
-            </button>
-          </div>
+          {/*  */}
+          <Google />
           <p className="text-xs text-center sm:px-6 text-black">
             Already have an account?
             <Link

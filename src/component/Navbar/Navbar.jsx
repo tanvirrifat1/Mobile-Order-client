@@ -36,6 +36,25 @@ const Navbar = () => {
               </li>
             </ul>
           </nav>
+          {user.photoURL && (
+            <div>
+              <div className="flex flex-col mt-2 items-center justify-center">
+                <div className="flex justify-center gap-2">
+                  <div className="flex space-x-5">
+                    <img
+                      alt=""
+                      className="w-12 h-12 rounded-full ri ri dark:bg-gray-500 ri ri"
+                      src={user.photoURL}
+                    />
+                  </div>
+                  <p className="lg:mt-4 font-semibold">
+                    Welcome{" "}
+                    <span className="text-purple-800">{user.displayName}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {user ? (
             <>
