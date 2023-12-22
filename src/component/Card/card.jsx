@@ -16,7 +16,7 @@ const Card = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/v1/mobile?searchTerm=${searchQuery}`
+          `https://mobile-order-nu.vercel.app/api/v1/mobile?searchTerm=${searchQuery}`
         );
         const jsonData = await response.json();
         setData(jsonData);
@@ -42,7 +42,7 @@ const Card = () => {
         productId: service?._id,
       };
 
-      fetch(`http://localhost:5000/api/v1/cart/create-cart`, {
+      fetch(`https://mobile-order-nu.vercel.app/api/v1/cart/create-cart`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -127,7 +127,7 @@ const Card = () => {
           {data?.data?.map((service) => (
             <div
               key={service?.id}
-              className=" rounded-md shadow-md group relative p-2"
+              className=" rounded-md bg-white shadow-md group relative p-2"
             >
               <img
                 src={service?.image}

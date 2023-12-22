@@ -24,8 +24,9 @@ const Login = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
-        // Handle error
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        Swal.fire(errorCode, errorMessage);
       });
   };
 

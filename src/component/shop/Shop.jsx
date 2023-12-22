@@ -14,7 +14,7 @@ const Shop = () => {
     queryKey: ["cart", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/api/v1/cart/total?email=${user?.email}`
+        `https://mobile-order-nu.vercel.app/api/v1/cart/total?email=${user?.email}`
       );
       return res.json();
     },
@@ -40,7 +40,7 @@ const Shop = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/api/v1/cart/${id}`, {
+        fetch(`https://mobile-order-nu.vercel.app/api/v1/cart/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
